@@ -12,7 +12,7 @@ export class Bot {
     }
 
     processFollowTrickProfiles() {
-        return this.client.listMembers('followtrick')
+        return this.client.listMembers(process.env.LIST_NAME)
             .then(members => {
                 members.map(member => this.profilesIds.push(member.id_str))
             }).catch(err => {
@@ -37,11 +37,11 @@ export class Bot {
         setTimeout(() => { this.expireFavorite() }, 5 * 1000);
     }
 
-    async exitBot() {
+    exitBot() {
         console.log("INFO - Running clean...")
         if (this.favoritedTweets) {
-            await this.favoritedTweets.map(async (tweet, index) => {
-                await this.client.favoriteRemove(tweet.id)
+            this.favoritedTweets.map(async (tweet, index) => {
+                this.client.favoriteRemove(tweet.id)
                     .then(() => {
                         delete this.favoritedTweets[index];
                     })
@@ -83,7 +83,7 @@ export class Bot {
                                 console.log(`ERROR - Failed to add favorite tweet [${tweet.id_str}]`)
                                 console.log(err)
                             })
-                    }, 5000)
+                    }, 15000) // 15 SECONDS
                 }
             });
             stream.on('error', err => {
