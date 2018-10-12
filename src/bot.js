@@ -27,14 +27,38 @@ export class Bot {
                 if (currentTime >= this.maxFavoriteTime)
                     this.client.favoriteRemove(tweet.id)
                         .then(() => {
-                            console.log(`SUCCESS - Remove favorite tweet [${tweet.id}] -> ${tweet.text}`);
+                            console.log(`SUCCESS - Remove favorite tweet [${tweet.id}]`);
                             delete this.favoritedTweets[index];
                         }).catch(err => {
-                            console.log(`ERROR - Failed to remove favorite tweet [${tweet.id}] -> ${tweet.text}`);
+                            console.log(`ERROR - Failed to remove favorite tweet [${tweet.id}]`);
                             console.log(err)
                         })
             })
         setTimeout(() => { this.expireFavorite() }, 5 * 1000);
+    }
+
+    async exitBot() {
+        console.log("INFO - Running clean...")
+        if (this.favoritedTweets) {
+            await this.favoritedTweets.map(async (tweet, index) => {
+                await this.client.favoriteRemove(tweet.id)
+                    .then(() => {
+                        delete this.favoritedTweets[index];
+                    })
+                    .then(() => {
+                        if ((index + 1) === this.favoritedTweets.length)
+                            process.exit(1)
+                    })
+                    .catch(err => {
+                        console.log(`ERROR - Failed to remove favorite tweet [${tweet.id}] -> ${err.message}`);
+                        if ((index + 1) === this.favoritedTweets.length)
+                            process.exit(1)
+                    })
+            })
+        }
+        else {
+            process.exit(1)
+        }
     }
 
     async run() {
@@ -49,14 +73,14 @@ export class Bot {
                     setTimeout(() => {
                         this.client.favoriteCreate(tweet.id_str)
                             .then(() => {
-                                console.log(`SUCCESS - Add favorite tweet [${tweet.id_str}] -> ${tweet.text}`)
+                                console.log(`SUCCESS - Add favorite tweet [${tweet.id_str}]`)
                                 this.favoritedTweets.push({
                                     'id': tweet.id_str,
                                     'text': tweet.text,
                                     'time': moment()
                                 })
                             }).catch(err => {
-                                console.log(`ERROR - Failed to add favorite tweet [${tweet.id_str}] -> ${tweet.text}`)
+                                console.log(`ERROR - Failed to add favorite tweet [${tweet.id_str}]`)
                                 console.log(err)
                             })
                     }, 5000)
