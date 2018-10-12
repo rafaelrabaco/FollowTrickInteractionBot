@@ -1,0 +1,23 @@
+{
+  "name": "followtrickinteractionbot",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node -- src/index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "moment": "^2.22.2",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/node": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "babel-loader": "8.0.4",
+    "nodemon": "1.18.4"
+  }
+}
