@@ -1,13 +1,12 @@
-import { Bot } from './bot';
 import * as dotenv from "dotenv";
+import { Bot } from "./Bot";
 dotenv.config();
 
-
 const packageJson = require('../package.json');
-console.log(`FollowTrickBot v${packageJson.version}`);
+console.log(`FollowTrickInteractionBot v${packageJson.version}`);
 console.log('INFO - Starting bot...');
 
-export const server = new Bot();
+const server: Bot = new Bot();
 server.run();
 
 process.stdin.resume(); // The program will not close instantly
