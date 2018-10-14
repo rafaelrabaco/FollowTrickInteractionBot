@@ -81,7 +81,7 @@ var Bot = /** @class */ (function () {
         this.client.favoriteRemove(id)
             .then(function () { return console.log("SUCCESS - Remove favorite [" + id + "]"); })
             .catch(function (err) { return console.log("ERROR - Failed to remove favorite [" + id + "] -> " + err.message); });
-        this.queuedTweets.splice(this.favoritedTweets.findIndex(function (x) { return x.id === id; }), 1);
+        this.favoritedTweets.splice(this.favoritedTweets.findIndex(function (x) { return x.id === id; }), 1);
     };
     Bot.prototype.run = function () {
         return __awaiter(this, void 0, void 0, function () {
