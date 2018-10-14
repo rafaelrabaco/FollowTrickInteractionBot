@@ -51,7 +51,7 @@ export class Bot {
         this.client.favoriteRemove(id)
             .then(() => console.log(`SUCCESS - Remove favorite [${id}]`))
             .catch(err => console.log(`ERROR - Failed to remove favorite [${id}] -> ${err.message}`))
-        this.queuedTweets.splice(this.favoritedTweets.findIndex(x => x.id === id), 1);
+        this.favoritedTweets.splice(this.favoritedTweets.findIndex(x => x.id === id), 1);
     }
 
     async run() {
