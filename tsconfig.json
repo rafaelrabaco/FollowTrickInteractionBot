@@ -1,0 +1,23 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "lib": [
+            "dom",
+            "esnext"
+        ],
+        "module": "commonjs",
+        "outDir": "./dist",
+        "target": "es5",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "src/**/*",
+    ],
+    "exclude": [
+        "dist"
+    ]
+}
